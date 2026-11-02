@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function OfflinePage() {
-  const [isOnline, setIsOnline] = useState(true)
+  const [isOnline, setIsOnline] = useState<boolean | null>(null)
 
   useEffect(() => {
     const handleOnline = () => setIsOnline(true)
@@ -30,9 +30,12 @@ export default function OfflinePage() {
     }
   }
 
-  if (isOnline) {
-    // Redirect to home if back online
-    window.location.href = "/"
+  useEffect(() => {
+    // Redirect to home once back online
+    if (isOnline) window.location.href = "/"
+  }, [isOnline])
+
+  if (isOnline !== false) {
     return null
   }
 
